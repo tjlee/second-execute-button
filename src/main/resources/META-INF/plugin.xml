@@ -1,15 +1,21 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.tjlee.secondexecutebutton</id>
-    <name>second-execute-button</name>
+    <name>Second Query Execution Button</name>
     <vendor>tjlee</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.database</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
-
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.tjlee.secondexecutebutton.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.tjlee.secondexecutebutton.startup.MyProjectActivity" />
-    </extensions>
+    <actions>
+        <action id="com.github.tjlee.secondexecutebutton.SecondExecuteAction"
+                class="com.github.tjlee.secondexecutebutton.SecondExecuteAction"
+                text="Execute All as Separate Statements"
+                description="Execute all statements in the script as separate statements"
+                icon="AllIcons.Actions.RunAll">
+            <add-to-group group-id="Console.Jdbc.Left"
+                          anchor="after"
+                          relative-to-action="Console.Jdbc.Execute"/>
+        </action>
+    </actions>
 </idea-plugin>
