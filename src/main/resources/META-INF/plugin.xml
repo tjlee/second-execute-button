@@ -7,6 +7,16 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.database</depends>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService
+            serviceImplementation="com.github.tjlee.secondexecutebutton.SecondExecuteSettings"/>
+        <applicationConfigurable
+            parentId="database.query.execution"
+            instance="com.github.tjlee.secondexecutebutton.SecondExecuteConfigurable"
+            id="com.github.tjlee.secondexecutebutton.settings"
+            displayName="Second Query Execution Button"/>
+    </extensions>
+
     <actions>
         <action id="com.github.tjlee.secondexecutebutton.SecondExecuteAction"
                 class="com.github.tjlee.secondexecutebutton.SecondExecuteAction"

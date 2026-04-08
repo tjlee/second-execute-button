@@ -14,16 +14,17 @@ import com.intellij.psi.PsiDocumentManager
 
 class SecondExecuteAction : AnAction() {
 
-    private val execOption = DatabaseSettings.ExecOption().also {
-        it.execInside = DatabaseSettings.EXECUTE_INSIDE_WHOLE_SCRIPT    // 6
-        it.execOutside = DatabaseSettings.EXECUTE_OUTSIDE_WHOLE_SCRIPT        // 2
-        it.execSelection = DatabaseSettings.EXECUTE_SELECTION_EXACTLY_SCRIPT // 2
-    }
-
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
         PsiDocumentManager.getInstance(project).commitAllDocuments()
         FileDocumentManager.getInstance().saveAllDocuments()
+
+        val settings = SecondExecuteSettings.getInstance().state
+        val execOption = DatabaseSettings.ExecOption().also {
+            it.execInside = settings.execInside
+            it.execOutside = settings.execOutside
+            it.execSelection = settings.execSelection
+        }
 
         val info = QueryActionBase.getInfoClassic(e, execOption) { editor ->
             HintManager.getInstance().showErrorHint(editor, "Nothing to run")
